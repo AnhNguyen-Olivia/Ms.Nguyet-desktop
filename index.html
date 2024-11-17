@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="desktop">
+        <div class="desktop-icon" onclick="openFolder('lectures')">
+            <div class="icon-image">
+                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+            </div>
+            <div class="icon-text">Lecture Materials</div>
+        </div>
+        
+        <div class="desktop-icon" onclick="openFolder('research')">
+            <div class="icon-image">
+                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+            </div>
+            <div class="icon-text">Research Data</div>
+        </div>
+        
+        <div class="desktop-icon" onclick="openFolder('personal')">
+            <div class="icon-image">
+                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+            </div>
+            <div class="icon-text">Personal</div>
+        </div>
+
+        <div class="window" id="lectures-window">
+            <div class="window-header">
+                <div class="window-title">Lecture Materials</div>
+                <div class="window-controls">
+                    <div class="window-button minimize"></div>
+                    <div class="window-button maximize"></div>
+                    <div class="window-button close" onclick="closeWindow('lectures-window')"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="folder-content">
+                    <div class="file-item">📄 PSYC401_Syllabus.pdf</div>
+                    <div class="file-item">📄 Lecture1_Consciousness.pptx</div>
+                    <div class="file-item">📄 Lecture2_Memory.pptx</div>
+                    <div class="file-item">📄 Experiment_Notes.docx</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="research-window">
+            <div class="window-header">
+                <div class="window-title">Research Data</div>
+                <div class="window-controls">
+                    <div class="window-button minimize"></div>
+                    <div class="window-button maximize"></div>
+                    <div class="window-button close" onclick="closeWindow('research-window')"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="folder-content">
+                    <div class="file-item" onclick="requestAccess()">🔒 Subject_Data.xlsx</div>
+                    <div class="file-item" onclick="requestAccess()">🔒 Experiment_Results.csv</div>
+                    <div class="file-item" onclick="requestAccess()">🔒 Lab_Records.pdf</div>
+                    <div class="file-item">📄 IRB_Approval.pdf</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="personal-window">
+            <div class="window-header">
+                <div class="window-title">Personal</div>
+                <div class="window-controls">
+                    <div class="window-button minimize"></div>
+                    <div class="window-button maximize"></div>
+                    <div class="window-button close" onclick="closeWindow('personal-window')"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="folder-content">
+                    <div class="file-item">📄 To_Do_List.txt</div>
+                    <div class="file-item" onclick="triggerCreepy()">📄 Journal.txt</div>
+                    <div class="file-item" onclick="triggerCreepy()">📁 Photos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <div class="start-button">Menu</div>
+        <div class="clock">4:13 PM</div>
+    </div>
+
+    <div class="popup" id="access-popup">
+        <div class="popup-header">
+            <div class="popup-title">Authentication Required</div>
+            <div class="window-controls">
+                <div class="window-button close" onclick="closePopup()"></div>
+            </div>
+        </div>
+        <div class="popup-content">
+            <p>Enter access code to view secured files:</p>
+            <input type="password" class="password-input" placeholder="Access Code">
+            <div class="error-message">Incorrect code. Access denied.</div>
+            <div class="popup-buttons">
+                <button class="popup-button" onclick="closePopup()">Cancel</button>
+                <button class="popup-button primary" onclick="checkPassword()">OK</button>
+            </div>
+        </div>
+    </div> 
+    <script src="script.js"></script>
+</body>
+</html>

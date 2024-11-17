@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        :root {
+            --window-bg: #f0f0f0;
+            --desktop-bg: #004080;
+            --text: #333;
+            --taskbar: #1a1a1a;
+            --window-border: #cacaca;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--desktop-bg);
+            overflow: hidden;
+            height: 100vh;
+            cursor: default;
+        }
+
+        .desktop {
+            height: calc(100vh - 40px);
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .desktop-icon {
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            display: inline-block;
+        }
+        .taskbar {
+            height: 40px;
+            background: var(--taskbar);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .start-button {
+            padding: 5px 15px;
+            background: rgba(255,255,255,0.1);
+            margin-right: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .clock {
+            margin-left: auto;
+            padding: 0 15px;
+        }
+
+        .desktop-icon {
+            width: 80px;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+            color: white;
+            display: inline-block;
+        }
+
+        .icon-image {
+            width: 48px;
+            height: 48px;
+            background: var(--folder-color);
+            margin: 0 auto 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .icon-text {
+            font-size: 12px;
+            word-wrap: break-word;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .window {
+            position: absolute;
+            background: var(--window-bg);
+            border: 1px solid var(--window-border);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-width: 400px;
+            display: none;
+        }
+
+        .window-header {
+            background: white;
+            padding: 10px;
+            border-bottom: 1px solid var(--window-border);
+            display: flex;
+            align-items: center;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .window-title {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .close { background: #ff5f57; }
+        .minimize { background: #febc2e; }
+        .maximize { background: #28c940; }
+
+        .window-content {
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .folder-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .file-item:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .file-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            background: #ddd;
+        }
+
+        .glitch {
+            animation: glitchEffect 0.3s infinite;
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(0) skew(0deg); }
+            20% { transform: translate(-2px, 2px) skew(2deg); }
+            40% { transform: translate(-2px, -2px) skew(-2deg); }
+            60% { transform: translate(2px, 2px) skew(2deg); }
+            80% { transform: translate(2px, -2px) skew(-2deg); }
+            100% { transform: translate(0) skew(0deg); }
+        }
+
+        .hidden-message {
+            position: absolute;
+            color: white;
+            font-family: monospace;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--window-bg);
+            border: 1px solid var(--window-border);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: none;
+            min-width: 300px;
+        }
+
+        .popup-header {
+            background: white;
+            padding: 10px;
+            border-bottom: 1px solid var(--window-border);
+            display: flex;
+            align-items: center;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .popup-title {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .popup-content {
+            padding: 20px;
+        }
+
+        .password-input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .popup-button {
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--window-border);
+            background: white;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+        }
+
+        .popup-button:hover {
+            background: var(--window-bg);
+        }
+
+        .popup-button.primary {
+            background: #0078D4;
+            color: white;
+            border: none;
+        }
+
+        .popup-button.primary:hover {
+            background: #006CBD;
+        }
