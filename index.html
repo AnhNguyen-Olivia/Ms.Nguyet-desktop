@@ -4,31 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Desktop Interface</title>
 </head>
 <body>
     <div class="desktop">
+        <!-- Desktop Icons -->
         <div class="desktop-icon" onclick="openFolder('lectures')">
             <div class="icon-image">
-                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+                <img src="pics/icons8-mac-folder-48.png" alt="folder-icon">
             </div>
             <div class="icon-text">Lecture Materials</div>
         </div>
         
         <div class="desktop-icon" onclick="openFolder('research')">
             <div class="icon-image">
-                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+                <img src="pics/icons8-mac-folder-48.png" alt="folder-icon">
             </div>
             <div class="icon-text">Research Data</div>
         </div>
         
         <div class="desktop-icon" onclick="openFolder('personal')">
             <div class="icon-image">
-                <img src="icons8-mac-folder-48.png" alt="folder-icon">
+                <img src="pics/icons8-mac-folder-48.png" alt="folder-icon">
             </div>
             <div class="icon-text">Personal</div>
         </div>
 
+        <!-- Lectures Window -->
         <div class="window" id="lectures-window">
             <div class="window-header">
                 <div class="window-title">Lecture Materials</div>
@@ -48,6 +50,7 @@
             </div>
         </div>
 
+        <!-- Research Window -->
         <div class="window" id="research-window">
             <div class="window-header">
                 <div class="window-title">Research Data</div>
@@ -67,6 +70,7 @@
             </div>
         </div>
 
+        <!-- Personal Window -->
         <div class="window" id="personal-window">
             <div class="window-header">
                 <div class="window-title">Personal</div>
@@ -78,20 +82,16 @@
             </div>
             <div class="window-content">
                 <div class="folder-content">
-                    <div class="file-item">📄 To_Do_List.txt</div>
+                    <div class="file-item" onclick="triggerCreepy()">📄 To_Do_List.txt</div>
                     <div class="file-item" onclick="triggerCreepy()">📄 Journal.txt</div>
-                    <div class="file-item" onclick="triggerCreepy()">📁 Photos</div>
+                    <div class="file-item" onclick="requestAccess()">📁 Photos</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="taskbar">
-        <div class="start-button">Menu</div>
-        <div class="clock">4:13 PM</div>
-    </div>
-
-    <div class="popup" id="access-popup">
+    <!-- Password Popup -->
+    <div id="access-popup" class="popup">
         <div class="popup-header">
             <div class="popup-title">Authentication Required</div>
             <div class="window-controls">
@@ -99,15 +99,38 @@
             </div>
         </div>
         <div class="popup-content">
-            <p>Enter access code to view secured files:</p>
-            <input type="password" class="password-input" placeholder="Access Code">
-            <div class="error-message">Incorrect code. Access denied.</div>
-            <div class="popup-buttons">
-                <button class="popup-button" onclick="closePopup()">Cancel</button>
-                <button class="popup-button primary" onclick="checkPassword()">OK</button>
-            </div>
+            <form id="codeForm">
+                <input type="password" id="password" class="password-input" placeholder="Enter access code">
+                <div id="feedback" class="error-message"></div>
+                <div class="popup-buttons">
+                    <button type="button" class="popup-button" onclick="closePopup()">Cancel</button>
+                    <button type="submit" class="popup-button primary">OK</button>
+                </div>
+            </form>
         </div>
-    </div> 
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" style="display: none;">
+        <div class="loading-text"></div>
+    </div>
+
+    <!-- Jumpscare Element -->
+    <div id="jumpscare" style="display: none;">
+        <img src="" alt="jumpscare">
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-container" style="display: none;">
+        <div class="countdown-timer"></div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button">Menu</div>
+        <div class="clock">4:13 PM</div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
