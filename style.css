@@ -23,6 +23,9 @@
             height: 100vh;
             cursor: default;
             background-image: var(--desktop-bg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .desktop {
