@@ -52,6 +52,7 @@ const imageLoadPromise = audioLoadPromise.then(() => {
             resolve();
         };
         jumpscareImage.src = "pics/jumpscareImage.png";
+        
     });
 });
 

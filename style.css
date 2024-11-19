@@ -2,7 +2,7 @@
 
         :root {
             --window-bg: #f0f0f0;
-            --desktop-bg: #004080;
+            --desktop-bg: url("pics/background.png");
             --text: #333;
             --taskbar: #1a1a1a;
             --window-border: #cacaca;
@@ -22,6 +22,7 @@
             overflow: hidden;
             height: 100vh;
             cursor: default;
+            background-image: var(--desktop-bg);
         }
 
         .desktop {
@@ -71,7 +72,7 @@
             text-align: center;
             margin: 10px;
             cursor: pointer;
-            color: white;
+            color: black;
             display: inline-block;
         }
 
@@ -422,4 +423,172 @@
             max-height: 100%;
             object-fit: contain;
             display: block;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .loading-text {
+            color: #ff0000;
+            font-family: monospace;
+            font-size: 24px;
+            text-align: center;
+            animation: flicker 0.5s infinite;
+        }
+        
+        #jumpscare {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+          }
+          
+        #jumpscare img {
+            width: auto;
+            height: auto;
+            max-height: 100%;
+            max-width: 100%;
+            animation: shake-image 0.5s infinite;
+        }   
+        .hidden {
+            display: none;
+        }
+        
+        /* Countdown styles */
+        .countdown-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: #ff0000;
+            font-size: 24px;
+            display: none;
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .countdown-timer {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        /* Animation keyframes */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* Form disabled state */
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* Shake animation for body */
+        body.shake {
+            animation: shake 0.1s infinite;
+        }
+        
+        /* Enhanced glitch effect */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            z-index: -1;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            background: rgba(255, 0, 0, 0.3);
+            animation: glitch-anim-1 0.3s infinite;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            background: rgba(0, 255, 255, 0.3);
+            animation: glitch-anim-2 0.3s infinite;
+        }
+        
+        @keyframes glitch-anim-1 {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(-2px, 2px); }
+            66% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-anim-2 {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(2px, -2px); }
+            66% { transform: translate(-2px, 2px); }
+        }
+        
+        /* Enhanced hidden message styles */
+        .hidden-message {
+            position: absolute;
+            color: #ff0000;
+            font-family: monospace;
+            font-size: 32px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            text-shadow: 
+                2px 2px 0 #000,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000;
+            z-index: 9998;
+        }
+        
+        /* Cursor styles for interactive elements */
+        .window-button,
+        .popup-button,
+        .start-button,
+        .photo-item {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .window-button:hover,
+        .popup-button:hover,
+        .start-button:hover,
+        .photo-item:hover {
+            transform: scale(1.05);
         }
