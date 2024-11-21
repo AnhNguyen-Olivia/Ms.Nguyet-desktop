@@ -5,11 +5,9 @@ let windows = {
     'personal-window': false
 };
 
-// Store password hash instead of plain text
-// Using SHA-256 for demonstration - in production, use a proper password hashing algorithm
-const PASS_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"; // Hash of "1234"
+const PASS_HASH = "fc9e91cc78e1817d80b4ba8c2dc9a638d0c57959825ee34f5e3d7688ad80dfb9"; // "password 3876"
 const MAX_ATTEMPTS = 1;
-const COOLDOWN_TIME = 30000; // 30 seconds
+const COOLDOWN_TIME = 15000; // 15 seconds
 const JUMPSCARE_DURATION = 5000;
 
 // Security state
@@ -90,50 +88,91 @@ async function hashPassword(password) {
 }
 
 function isInCooldown() {
-    if (isCooldownActive && attemptCount >= MAX_ATTEMPTS) {
-        const currentTime = Date.now();
-        if (currentTime - lastAttemptTime < COOLDOWN_TIME) {
-            return Math.ceil((COOLDOWN_TIME - (currentTime - lastAttemptTime)) / 1000);
-        }
-        attemptCount = 0;
-        isCooldownActive = false;
-        return 0;
+    const cooldownData = JSON.parse(localStorage.getItem('passwordCooldown') || '{}');
+    const currentTime = Date.now();
+    
+    // Check if there's an active cooldown in localStorage
+    if (cooldownData.expiryTime && currentTime < cooldownData.expiryTime) {
+        return Math.ceil((cooldownData.expiryTime - currentTime) / 1000);
     }
+    
+    // Clear expired cooldown data
+    localStorage.removeItem('passwordCooldown');
+    attemptCount = 0;
+    isCooldownActive = false;
     return 0;
 }
 
 function updateCountdown(seconds) {
     const countdownContainer = document.querySelector('.countdown-container');
     const countdownTimer = document.querySelector('.countdown-timer');
+    const feedback = document.getElementById('feedback');
     
     if (seconds > 0) {
-        countdownContainer.style.display = 'flex';
-        countdownTimer.textContent = seconds;
+        if (countdownContainer && countdownTimer) {
+            countdownContainer.style.display = 'flex';
+            countdownTimer.textContent = seconds;
+        }
+        if (feedback) {
+            feedback.textContent = `Too many attempts. Please wait ${seconds} seconds.`;
+        }
     } else {
-        countdownContainer.style.display = 'none';
+        if (countdownContainer) {
+            countdownContainer.style.display = 'none';
+        }
+        if (feedback) {
+            feedback.textContent = '';
+        }
     }
 }
 
 function startCooldown() {
-    lastAttemptTime = Date.now();
+    const currentTime = Date.now();
+    const expiryTime = currentTime + COOLDOWN_TIME;
+    
+    // Save cooldown state to localStorage
+    localStorage.setItem('passwordCooldown', JSON.stringify({
+        expiryTime: expiryTime,
+        attemptCount: attemptCount
+    }));
+    
     isCooldownActive = true;
+    isLocked = true;
     
     function updateCooldownMessage() {
         const remainingTime = isInCooldown();
-        const feedback = document.getElementById('feedback');
+        const form = document.getElementById('codeForm');
+        
         if (remainingTime > 0) {
             updateCountdown(remainingTime);
-            feedback.textContent = `Too many attempts. Please wait ${remainingTime} seconds.`;
+            if (form) {
+                form.classList.add('disabled');
+            }
             setTimeout(updateCooldownMessage, 1000);
         } else {
             updateCountdown(0);
-            feedback.textContent = "";
+            if (form) {
+                form.classList.remove('disabled');
+            }
             isLocked = false;
-            document.getElementById('codeForm').classList.remove('disabled');
+            attemptCount = 0;
+            isCooldownActive = false;
         }
     }
     
     updateCooldownMessage();
+}
+function initializeCooldownState() {
+    const remainingTime = isInCooldown();
+    if (remainingTime > 0) {
+        isLocked = true;
+        isCooldownActive = true;
+        const form = document.getElementById('codeForm');
+        if (form) {
+            form.classList.add('disabled');
+        }
+        startCooldown();
+    }
 }
 
 function requestAccess() {
@@ -380,7 +419,7 @@ updateClock();
 
 // Password handling - single event listener
 document.querySelector('.password-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') {    
         checkPassword();
     }
 });
@@ -392,6 +431,8 @@ document.addEventListener('DOMContentLoaded', () => {
         makeWindowDraggable(element);
         addClickToFront(element);
     });
+
+    initializeCooldownState();
 
     const passwordInput = document.querySelector('.password-input');
     if (passwordInput) {
@@ -418,8 +459,7 @@ document.getElementById('codeForm').addEventListener('submit', async function(e)
     
     const cooldownTime = isInCooldown();
     if (cooldownTime > 0) {
-        document.getElementById('feedback').textContent = 
-            `Too many attempts. Please wait ${cooldownTime} seconds.`;
+        updateCountdown(cooldownTime);
         return;
     }
     
@@ -434,10 +474,7 @@ document.getElementById('codeForm').addEventListener('submit', async function(e)
         isLocked = true;
         form.classList.add('disabled');
         
-        feedback.textContent = attemptCount >= MAX_ATTEMPTS 
-            ? `Wrong password. Please wait...`
-            : `Wrong password. ${MAX_ATTEMPTS - attemptCount} attempts remaining.`;
-        
+        // Your existing jumpscare sequence
         const loadingScreen = document.getElementById('loadingScreen');
         loadingScreen.style.display = 'flex';
         startCreepyMessages();
@@ -461,5 +498,4 @@ document.getElementById('codeForm').addEventListener('submit', async function(e)
         showPhotos();
         closePopup();
     }
-}
-);
+});
