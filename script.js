@@ -213,9 +213,9 @@ function showPhotos() {
                         <div class="photo-icon">🖼️</div>
                         <div class="photo-name">Photo 1</div>
                     </div>
-                    <div class="photo-item" onclick="showImage('pics/maze.png', 'maze')">
+                    <div class="photo-item" onclick="showImage('pics/maze.png', 'Photo 2')">
                         <div class="photo-icon">🖼️</div>
-                        <div class="photo-name">maze</div>
+                        <div class="photo-name">Photo 2</div>
                     </div>
                     <div class="photo-item" onclick="showImage('pics/Raphael_-_The_Small_Cowper_Madon.png', 'Photo 3')">
                         <div class="photo-icon">🖼️</div>
